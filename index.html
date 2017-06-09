@@ -2,18 +2,20 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>My Awesome Electron App</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://mapzen.com/common/styleguide/styles/styleguide.css">
+    
   </head>
-  <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+  <body id="body">
+
+    <h3>Hey, I'm just an empty app full of possibilities!</h3>
+
   </body>
 
-  <script>
-    // You can also require other files to run in this process
-    require('./renderer.js')
-  </script>
+  <!-- Javascript -->
+  <script src="https://mapzen.com/common/styleguide/scripts/mapzen-styleguide.min.js"></script>
+  <script src="./index_renderer.js" charset="utf-8"></script>
+
 </html>
