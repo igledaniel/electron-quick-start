@@ -1,14 +1,11 @@
 const { ipcRenderer } = require('electron');
 const settings = require('electron-settings');
-const config = require('./config.json');
-
 const mapzenSearch = require('./mapzen-util/src/js/mapzenSearch');
 
-let map;
-let marker;
-let search;
-
 const api_key = 'mapzen-fepXwQF';
+
+let map;
+let search;
 
 // handle window loading event
 document.getElementById('body').onload = function () {
@@ -49,22 +46,7 @@ function addClickHandler() {
 
     // query mapzen search asynchronously and handle results as desired
     mapzenSearch(reverseOptions, (err, results) => {
-      dropMarker(results);
+      console.log('search results', results);
     });
   });
-}
-
-// Draw the POI marker (just geojson with points, no polygons)
-function dropMarker(place) {
-  // if previous marker existed, remove it
-  if (marker) {
-    map.removeLayer(marker);
-  }
-
-  marker = L.geoJson(place, {
-    onEachFeature: function (feature, layer) {
-      // show label when marker is clicked
-      layer.bindPopup(feature.properties.label);
-    }
-  }).addTo(map);
 }
