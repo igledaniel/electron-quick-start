@@ -4,9 +4,9 @@ const search = require('./mapzen-util/src/js/mapzenSearch');
 const whosonfirst = require('./mapzen-util/src/js/whosonfirst');
 
 const api_key = 'mapzen-fepXwQF';
-
 let map;
 let highlight;
+
 
 // handle window loading event
 document.getElementById('body').onload = function () {
