@@ -1,5 +1,7 @@
 # Mapzen Electrong Quick Start Template
 
+*** How to Electron workshop guide can be found [in the Wiki](https://github.com/mapzen/electron-quick-start/wiki/How-to-Electron-Workshop) ***
+
 This repository is a fork of the [electron/electron-quick-start](https://github.com/electron/electron-quick-start) repository which has been augmented with Mapzen-specific utilities. Some things have been changed for the sake of simplicity, as well.
 
 **Clone and run for a quick way to see Electron in action.**
