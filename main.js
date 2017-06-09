@@ -1,20 +1,11 @@
 const { app, ipcMain, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
+const config = require('./config.json');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
-
-
-const config = require('./config.json');
-if (config.auth) {
-  const auth = require('./mapzen-util/src/js/authMain');
-  auth.init(ipcMain);
-}
-else if (config.api_key) {
-  require('electron-settings').set('current_api_key', config.api_key);
-} 
 
 
 // This method will be called when Electron has finished

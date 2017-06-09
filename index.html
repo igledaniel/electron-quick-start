@@ -7,28 +7,13 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://mapzen.com/common/styleguide/styles/styleguide.css">
     
-    <style>
-      html,body{margin: 0; padding: 0;}
-      #header {
-        height: 55px;
-        width: 100%;
-        background-color: #1e0e33; 
-        color: #f8f8f8;
-        text-align: center;
-        display: inline-block;
-        vertical-align: middle;
-        line-height: normal;
-        line-height: 50px;
-        width: 100%;
-      }
-    </style>
-
-    <!-- Mapzen.js -->
+     <!-- Mapzen.js -->
     <link rel="stylesheet" href="https://mapzen.com/js/mapzen.css">
     <script src="https://mapzen.com/js/mapzen.min.js"></script>
     <style>
-       #map-container {
-        height: calc(100% - 55px);
+      html,body{margin: 0; padding: 0;}
+      #map-container {
+        height: 100%;
         position: relative;
       }
       #map {
@@ -37,15 +22,9 @@
         position: absolute;
       }
     </style>
-    
 
   </head>
   <body id="body">
-
-    <!-- HEADER with user avatar -->
-    <div id="header">
-      <img id="user-avatar" class="avatar-byline">
-    </div>
 
     <!-- THE MAP -->
     <div id="map-container">
@@ -56,6 +35,6 @@
 
   <!-- Javascript -->
   <script src="https://mapzen.com/common/styleguide/scripts/mapzen-styleguide.min.js"></script>
-  <script src="./index.js" charset="utf-8"></script>
+  <script src="./index_renderer.js" charset="utf-8"></script>
 
 </html>
