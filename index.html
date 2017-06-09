@@ -2,18 +2,60 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>My Awesome Electron App</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://mapzen.com/common/styleguide/styles/styleguide.css">
+    
+    <style>
+      html,body{margin: 0; padding: 0;}
+      #header {
+        height: 55px;
+        width: 100%;
+        background-color: #1e0e33; 
+        color: #f8f8f8;
+        text-align: center;
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+        line-height: 50px;
+        width: 100%;
+      }
+    </style>
+
+    <!-- Mapzen.js -->
+    <link rel="stylesheet" href="https://mapzen.com/js/mapzen.css">
+    <script src="https://mapzen.com/js/mapzen.min.js"></script>
+    <style>
+       #map-container {
+        height: calc(100% - 55px);
+        position: relative;
+      }
+      #map {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+      }
+    </style>
+    
+
   </head>
-  <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+  <body id="body">
+
+    <!-- HEADER with user avatar -->
+    <div id="header">
+      <img id="user-avatar" class="avatar-byline">
+    </div>
+
+    <!-- THE MAP -->
+    <div id="map-container">
+      <div id="map"></div>
+    </div>
+
   </body>
 
-  <script>
-    // You can also require other files to run in this process
-    require('./renderer.js')
-  </script>
+  <!-- Javascript -->
+  <script src="https://mapzen.com/common/styleguide/scripts/mapzen-styleguide.min.js"></script>
+  <script src="./index.js" charset="utf-8"></script>
+
 </html>
