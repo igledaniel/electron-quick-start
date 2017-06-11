@@ -1,6 +1,7 @@
 const { ipcRenderer } = require('electron');
 const settings = require('electron-settings');
 const search = require('./mapzen-util/src/js/mapzenSearch');
+const whosonfirst = require('./mapzen-util/src/js/whosonfirst');
 
 const api_key = 'mapzen-fepXwQF';
 
@@ -38,7 +39,6 @@ function lookupLocation(lat, lng) {
   console.log(lat, lng);
 
   const options = {
-    host: 'https://search.mapzen.com',
     api_key: api_key,
     endpoint: 'reverse',
     params: {
@@ -49,5 +49,17 @@ function lookupLocation(lat, lng) {
   };
   search(options, function (err, results) {
     console.log('reverse geocoding results', results);
+
+    if (results.features.length < 1) {
+      console.log('no reverse geocoding results');
+      return;
+    }    
+
+    const wofOptions = {
+      id: results.features[0].properties.source_id
+    };
+    whosonfirst(wofOptions, function (err, region) {
+      console.log('region details', region);
+    });
   });
 }

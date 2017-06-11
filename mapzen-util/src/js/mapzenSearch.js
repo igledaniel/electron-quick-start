@@ -10,7 +10,10 @@ const request = require('request');
  * @param {function} callback 
  */
 function query(options, callback) {
-  const { host, api_key, endpoint, params } = options;
+  let { host, api_key, endpoint, params } = options;
+
+  // set default host  
+  host = host || 'https://search.mapzen.com';
 
   const query = `${host}/v1/${endpoint}?api_key=${api_key}&${querystring.stringify(params)}`;
   request.get(query, (err, res) => {
