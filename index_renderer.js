@@ -6,6 +6,7 @@ const whosonfirst = require('./mapzen-util/src/js/whosonfirst');
 const api_key = 'mapzen-fepXwQF';
 
 let map;
+let highlight;
 
 // handle window loading event
 document.getElementById('body').onload = function () {
@@ -60,6 +61,28 @@ function lookupLocation(lat, lng) {
     };
     whosonfirst(wofOptions, function (err, region) {
       console.log('region details', region);
+
+      addToMap(results.features[0], region);
     });
   });
+}
+
+// Draw the polygon(s) in the given geojson on the map.
+function addToMap(searchResult, wofResult) {
+  // if previous highlight was drawn, remove it
+  if (highlight) {
+    map.removeLayer(highlight);
+  }
+
+  highlight = L.geoJson(wofResult, {
+    style: function (feature) {
+      return {
+        weight: 1,
+        color: 'purple',
+        opacity: '0.7'
+      };
+    }
+  }).addTo(map);
+  
+  highlight.bindPopup(searchResult.properties.label).openPopup();
 }
