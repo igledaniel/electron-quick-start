@@ -1,11 +1,10 @@
 const { ipcRenderer } = require('electron');
 const settings = require('electron-settings');
-const mapzenSearch = require('./mapzen-util/src/js/mapzenSearch');
+const search = require('./mapzen-util/src/js/mapzenSearch');
 
 const api_key = 'mapzen-fepXwQF';
 
 let map;
-let search;
 
 // handle window loading event
 document.getElementById('body').onload = function () {
@@ -31,22 +30,24 @@ function initMap() {
 // Add click event handling to perform the reverse geocoding and draw the results on the map.
 function addClickHandler() {
   map.on('click', function (e) {
+    lookupLocation(e.latlng.lat, e.latlng.lng);
+  });
+}
 
-    // configuration for the reverse geocoding query
-    const reverseOptions = {
-      host: config.search.host,
-      api_key: api_key,
-      endpoint: 'reverse',
-      params: {
-        "point.lat": e.latlng.lat,
-        "point.lon": e.latlng.lng,
-        "layers": "region"
-      }
-    };
+function lookupLocation(lat, lng) {
+  console.log(lat, lng);
 
-    // query mapzen search asynchronously and handle results as desired
-    mapzenSearch(reverseOptions, (err, results) => {
-      console.log('search results', results);
-    });
+  const options = {
+    host: 'https://search.mapzen.com',
+    api_key: api_key,
+    endpoint: 'reverse',
+    params: {
+      'point.lat': lat,
+      'point.lon': lng,
+      layers: 'region'
+    }
+  };
+  search(options, function (err, results) {
+    console.log('reverse geocoding results', results);
   });
 }
