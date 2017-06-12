@@ -1,5 +1,6 @@
 const { ipcRenderer } = require('electron');
 const settings = require('electron-settings');
+const search = require('./mapzen-util/src/js/mapzenSearch');
 
 const api_key = 'mapzen-fepXwQF';
 let map;
@@ -21,4 +22,26 @@ function initMap() {
 
   var geocoder = L.Mapzen.geocoder();
   geocoder.addTo(map);
+
+  map.on('click', function (e) {
+    lookupLocation(e.latlng.lat, e.latlng.lng);
+  });
+}
+
+function lookupLocation(lat, lng) {
+  console.log(lat, lng);
+
+  const options = {
+    host: 'https://search.mapzen.com',
+    api_key: api_key,
+    endpoint: 'reverse',
+    params: {
+      'point.lat': lat,
+      'point.lon': lng,
+      layers: 'region'
+    }
+  };
+  search(options, function (err, results) {
+    console.log(results);
+  });
 }
