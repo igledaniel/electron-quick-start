@@ -14,7 +14,7 @@ let oauth_config;
 
 // obtain an authorization code by redirecting to the host
 // and allowing the user to login and click authorize
-function authenticate(config, ipcRenderer, callback) {
+function authenticate(config, ipcRenderer, clearCache, callback) {
   getAuthCallback = null;
   oauth_config = config;
 
@@ -22,7 +22,7 @@ function authenticate(config, ipcRenderer, callback) {
     return getUserData(callback);
   }
 
-  initAuthCallbackServer(ipcRenderer, callback);  
+  initAuthCallbackServer(ipcRenderer, clearCache, callback);  
 }
 
 function isAuthenticated() {
@@ -36,7 +36,7 @@ function isAuthenticated() {
   return settings.get('auth_token') && (settings.get('auth_expiration') > (Date.now()/1000));
 }
 
-function initAuthCallbackServer(ipcRenderer, callback) {
+function initAuthCallbackServer(ipcRenderer, clearCache, callback) {
   // receive the authorization code from the host
   app.get('/mapzen/auth/callback', function (req, res) {
     var code = req.query.code;
@@ -75,7 +75,7 @@ function initAuthCallbackServer(ipcRenderer, callback) {
       redirect_uri: oauth_config.redirect_uri,
       response_type: 'code'
     });
-    ipcRenderer.send('login', `${oauth_config.host}/oauth/authorize?${query}`);
+    ipcRenderer.send('login', `${oauth_config.host}/oauth/authorize?${query}`, clearCache);
   });
 
 }  

@@ -9,9 +9,9 @@ let selectedKey;
 
 document.getElementById('body').onload = function () {
   selectedKey = settings.get('current_api_key');
-
+  
   // this will require the user to login before loading anything else
-  authenticate(config.auth, ipcRenderer, function (err) {
+  authenticate(config.auth, ipcRenderer, false, function (err) {
     console.log('authentication is done');
 
     loadUserData();
@@ -40,7 +40,9 @@ function loadKeys() {
 }
 
 function loadUserData() {
-  document.getElementById('user-avatar').src = settings.get('user_avatar');
+  const defaultAvatar = '../public/img/mapzen-logo.png';
+
+  document.getElementById('user-avatar').src = settings.get('user_avatar') || defaultAvatar;
   document.getElementById('user-email').innerText = settings.get('user_email');
   document.getElementById('user-nickname').innerText = settings.get('user_nickname');
 }
@@ -68,8 +70,12 @@ function closeWindow() {
 function switchUser() {
   settings.deleteAll();
 
+  console.log('forget current user and authenticate again');
+  console.log('config looks like', config);
+
   // this will require the user to login before loading anything else
-  authenticate(ipcRenderer, function (err) {
+  // clearCache parameter should be set to true
+  authenticate(config.auth, ipcRenderer, true, function (err) {
     console.log('authentication is done');
     loadUserData();
     loadKeys();

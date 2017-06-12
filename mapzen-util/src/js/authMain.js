@@ -20,13 +20,18 @@ module.exports.init = function init(ipcMain) {
    * @param {object} event
    * @param {string} url
    */
-  ipcMain.on('login', (event, url) => {
+  ipcMain.on('login', (event, url, clearCache) => {
     console.log('got a login message')
     authWindow = new BrowserWindow({ width: 800, height: 600 });
     authWindow.on('closed', function () {
       authWindow = null
     });
 
+    if (clearCache) {
+      console.log('clearing previous cache to allow new login session');
+      authWindow.webContents.session.clearStorageData();
+    }
+    console.log('authMain loading url', url);      
     authWindow.loadURL(url);
   });
 
