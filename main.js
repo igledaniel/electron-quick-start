@@ -6,6 +6,16 @@ const url = require('url');
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
+console.log('cache path', app.getPath('userData') + '/Cache');
+  
+const config = require('./config.json');
+if (config.auth) {
+  const auth = require('./mapzen-util/src/js/authMain');
+  auth.init(ipcMain);
+}
+else if (config.api_key) {
+  require('electron-settings').set('current_api_key', config.api_key);
+}
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

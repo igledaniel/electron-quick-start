@@ -3,21 +3,61 @@ const settings = require('electron-settings');
 const search = require('./mapzen-util/src/js/mapzenSearch');
 const whosonfirst = require('./mapzen-util/src/js/whosonfirst');
 
-const api_key = 'mapzen-fepXwQF';
 let map;
 let highlight;
 
+// let main process know that you're interested in key update events
+ipcRenderer.send('waiting_for_key_updates');
+// listen for key update event and refresh the map and avatar
+ipcRenderer.on('api_key_updated', updateKey);
+
+function showUserProfile() {
+  // this is how you get the user profile window to be created and shown
+  ipcRenderer.send('user');
+}
+
+/**
+ * Update the avatar and map using new user information
+ */
+function updateKey() {
+  initUserAvatar();
+  initMap();
+}
+
+// if you have a user avatar on this page, this will bring up the user profile window
+// when avatar is clicked on
+function initUserAvatar() {
+  const defaultAvatar = './mapzen-util/public/img/mapzen-logo.png';
+  document.getElementById('user-avatar').src =  settings.get('user_avatar') || defaultAvatar;
+  document.getElementById('user-avatar').addEventListener('click', showUserProfile);
+}
 
 // handle window loading event
 document.getElementById('body').onload = function () {
   console.log('good news: index window is loading!');  
 
-  initMap();
+  // if we don't have an avatar, show the user profile for login
+  // and wait for the api_key_updated event to come through
+  if (!settings.get('user_avatar')) {
+    return showUserProfile();
+  }
+
+  updateKey();
 };
 
 function initMap() {
+  // clear map if previously existed
+  if (map) {
+    // if previous highlight was drawn, remove it
+    if (highlight) {
+      map.removeLayer(highlight);
+      highlight = null;
+    }
+    document.getElementById('map-container').innerHTML = '<div id="map"></div>';    
+  }  
+
   // Add a Mapzen API key
-  L.Mapzen.apiKey = api_key;
+  L.Mapzen.apiKey = settings.get('current_api_key');
   map = L.Mapzen.map('map', { maxZoom: 18, minZoom: 2 });
   
   // Set the center of the map to be the San Francisco Bay Area at zoom level 12
@@ -40,7 +80,7 @@ function lookupLocation(lat, lng) {
   console.log(lat, lng);
 
   const options = {
-    api_key: api_key,
+    api_key: settings.get('current_api_key'),
     endpoint: 'reverse',
     params: {
       'point.lat': lat,

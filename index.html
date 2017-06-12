@@ -6,14 +6,14 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://mapzen.com/common/styleguide/styles/styleguide.css">
-    
-     <!-- Mapzen.js -->
+
+    <!-- Mapzen.js -->
     <link rel="stylesheet" href="https://mapzen.com/js/mapzen.css">
     <script src="https://mapzen.com/js/mapzen.min.js"></script>
     <style>
       html,body{margin: 0; padding: 0;}
       #map-container {
-        height: 100%;
+        height: calc(100% - 55px);
         position: relative;
       }
       #map {
@@ -21,10 +21,27 @@
         width: 100%;
         position: absolute;
       }
+      #header {
+        height: 55px;
+        width: 100%;
+        background-color: #1e0e33;
+        color: #f8f8f8;
+        text-align: center;
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+        line-height: 50px;
+        width: 100%;
+      }
     </style>
 
   </head>
   <body id="body">
+
+    <!-- HEADER with user avatar -->
+    <div id="header">
+      <img id="user-avatar" class="avatar-byline">
+    </div>
 
     <!-- THE MAP -->
     <div id="map-container">
