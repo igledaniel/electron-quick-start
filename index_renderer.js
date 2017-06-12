@@ -38,7 +38,7 @@ document.getElementById('body').onload = function () {
 
   // if we don't have an avatar, show the user profile for login
   // and wait for the api_key_updated event to come through
-  if (!settings.get('user_avatar')) {
+  if (!settings.get('user_avatar') && !settings.get('current_api_key')) {
     return showUserProfile();
   }
 
