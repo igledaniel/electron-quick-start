@@ -1,4 +1,4 @@
-# Mapzen Electrong Quick Start Template
+# Mapzen Electron Quick Start Template
 
 ***How to Electron workshop guide can be found [in the Wiki](https://github.com/mapzen/electron-quick-start/wiki/How-to-Electron-Workshop)***
 
