@@ -7,10 +7,29 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://mapzen.com/common/styleguide/styles/styleguide.css">
     
+     <!-- Mapzen.js -->
+    <link rel="stylesheet" href="https://mapzen.com/js/mapzen.css">
+    <script src="https://mapzen.com/js/mapzen.min.js"></script>
+    <style>
+      html,body{margin: 0; padding: 0;}
+      #map-container {
+        height: 100%;
+        position: relative;
+      }
+      #map {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+      }
+    </style>
+
   </head>
   <body id="body">
 
-    <h3>Hey, I'm just an empty app full of possibilities!</h3>
+    <!-- THE MAP -->
+    <div id="map-container">
+      <div id="map"></div>
+    </div>
 
   </body>
 
